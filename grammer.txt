@@ -1,13 +1,10 @@
 statement ::= assignment_stmt
-            | declaration_stmt
             | loop_stmt
             | if_stmt
 
 assignment_stmt ::= identifier "=" expression
 
-declaration_stmt ::=  identifier "=" number
-
-loop_stmt ::= "for" identifier "in" "range" ":" suite
+loop_stmt ::= "for" identifier "in" "range" "(" number ")" ":" suite
 
 if_stmt ::= "if" condition ":" suite
 
