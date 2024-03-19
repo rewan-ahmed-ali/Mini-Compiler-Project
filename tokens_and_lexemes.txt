@@ -36,3 +36,6 @@ KEYWORD                	print
 PARENTHESIS            	(
 IDENTIFIER             	i
 PARENTHESIS            	)
+IDENTIFIER             	W
+OPERATOR               	=
+NUMBER                 	10
