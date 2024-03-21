@@ -9,7 +9,7 @@ def determine_token(lexeme):
         return "KEYWORD"
     elif lexeme.isalpha():
         if lexeme[0].isupper():
-            raise ValueError("Identifier cannot start with a capital letter")
+            raise ValueError("lexical error","Identifier cannot start with a capital letter")
         return "IDENTIFIER"
     elif lexeme in ["(", ")"]:
         return "PARENTHESIS"
