@@ -18,13 +18,13 @@ def parse_text_file(file_path):
                 if not variable.isidentifier():
                     grammar_errors.append(f"Error in line {line_num}: Invalid identifier  '{variable}'.")
                 elif variable[0].isupper():
-                    grammar_errors.append(f"Error in line {line_num}: Uppercase variable names are not supported.")
+                    grammar_errors.append(f"Error in line {line_num}: Uppercase identifier are not supported.")
                 else:
                     variables[variable] = expression
                 continue
 
             # Check for constraints x + y = 5 or x * y = 10
-            match = re.match(r'^(\w+)\s*([+*])\s*(\w+)\s*=\s*(\d+)$', line)
+            match = re.match(r'^\s*([+-]?\d*\.?\d+)\s*([+-])\s*([+-]?\d*\.?\d+)\s*=\s*([+-]?\d*\.?\d+)\s*$', line)
             if match:
                 var1, operator, var2, result = match.groups()
                 if operator == '+':
@@ -53,7 +53,7 @@ def handle_errors(errors):
 
 def main():
     # Path to your text file
-    file_path = "text.txt"
+    file_path = "error.txt"
 
     # Parse the text file and check for grammar errors
     errors = parse_text_file(file_path)
