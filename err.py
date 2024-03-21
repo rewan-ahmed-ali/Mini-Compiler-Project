@@ -16,7 +16,7 @@ def parse_text_file(file_path):
             if match:
                 variable, expression = match.groups()
                 if not variable.isidentifier():
-                    grammar_errors.append(f"Error in line {line_num}: Invalid variable name '{variable}'.")
+                    grammar_errors.append(f"Error in line {line_num}: Invalid identifier  '{variable}'.")
                 elif variable[0].isupper():
                     grammar_errors.append(f"Error in line {line_num}: Uppercase variable names are not supported.")
                 else:
@@ -32,13 +32,13 @@ def parse_text_file(file_path):
                         if int(variables[var1]) + int(variables[var2]) != int(result):
                             grammar_errors.append(f"Error in line {line_num}: Constraint '{var1} + {var2} = {result}' not satisfied.")
                     else:
-                        grammar_errors.append(f"Error in line {line_num}: Variables not defined for constraint.")
+                        grammar_errors.append(f"Error in line {line_num}: identifier not exist.")
                 elif operator == '*':
                     if var1 in variables and var2 in variables:
                         if int(variables[var1]) * int(variables[var2]) != int(result):
                             grammar_errors.append(f"Error in line {line_num}: Constraint '{var1} * {var2} = {result}' not satisfied.")
                     else:
-                        grammar_errors.append(f"Error in line {line_num}: Variables not defined for constraint.")
+                        grammar_errors.append(f"Error in line {line_num}: identifier not exist")
                 else:
                     grammar_errors.append(f"Error in line {line_num}: Invalid operator '{operator}'. Only '+' and '*' are supported.")
 
