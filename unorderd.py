@@ -18,13 +18,14 @@ def construct_symbol_table(line, line_number, counter):
         symbol_table.append({
             'counter': counter,
             'variable_name': var_name,
-            'code_address': None,  # Placeholder for code address
+            'code_address': counter + 1,  # Increment code_address by 1
             'datatype': data_type,
             'dimension': dimension,
             'line_declaration': line_declaration,
             'line_reference': line_reference
         })
-    return symbol_table, counter + 1
+        counter += 1  # Increment counter for the next symbol table entry
+    return symbol_table, counter
 
 # Function to read text file and construct symbol table for each line
 def process_text_file(filename):
