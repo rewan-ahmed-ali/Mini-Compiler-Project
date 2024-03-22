@@ -11,7 +11,7 @@ def parse_file(filename):
 
 def tokenize(code):
     # Tokenize the input code
-    tokens = re.findall(r'\bint\b|\bif\b|\bprint\b|[a-zA-Z_]\w*|[=><()+-]|[{};]', code)
+    tokens = re.findall(r'\bint\b|\bif\b|\bprint\b|[a-z_]\w*|[=><()+-]|[{};]', code)
     return tokens
 
 def parse(tokens):

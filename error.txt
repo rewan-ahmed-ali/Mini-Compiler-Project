@@ -4,6 +4,4 @@ a=1
 x+y=10
 if x > 10:
     print("x is greater than 10")
-for i in range(5):
-    print(i)
 W =10
