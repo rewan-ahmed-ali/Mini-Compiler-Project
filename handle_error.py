@@ -9,7 +9,7 @@ def determine_token(lexeme):
         return "KEYWORD"
     elif lexeme.isalpha():
         if lexeme[0].isupper():
-            raise ValueError("lexical error","Identifier cannot start with a capital letter")
+            raise ValueError("syntax error","Identifier cannot start with a capital letter")
         return "IDENTIFIER"
     elif lexeme in ["(", ")"]:
         return "PARENTHESIS"
@@ -17,7 +17,7 @@ def determine_token(lexeme):
         return "OPERATOR"
 
 # Read the contents of the text file
-with open('text.txt', 'r') as file:
+with open('error.txt', 'r') as file:
     file_contents = file.read()
 
 # Split the text into words and operators using regular expressions
@@ -57,6 +57,7 @@ grammar_rules = {
     "identifier": "[a-zA-Z_][a-zA-Z0-9_]*",
     "number": "[0-9]+"
 }
+
 
 # Create the table headers
 print("\nGrammar Table:")
