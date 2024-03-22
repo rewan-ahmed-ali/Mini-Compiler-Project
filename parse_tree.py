@@ -28,4 +28,4 @@ for line in lines:
     # Parse the statement using the provided parser
     for tree in parser.parse(tokens):
         print(tree)
-        tree.pretty_print()
+        # tree.pretty_print()
