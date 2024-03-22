@@ -73,4 +73,7 @@ def parse_print(tokens, pos):
         raise SyntaxError("Incomplete print statement")
 
 # Example usage
-parse_file("error.txt")
+try:
+    parse_file("error.txt")
+except SyntaxError as e:
+    print("Syntax Error:", e)

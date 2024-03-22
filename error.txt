@@ -1,6 +1,7 @@
-r=16
+r=16 
 a=1
 =10
+x+y=10
 if x > 10:
     print("x is greater than 10")
 for i in range(5):
