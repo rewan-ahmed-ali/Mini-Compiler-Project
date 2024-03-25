@@ -19,9 +19,9 @@ IDENTIFIER             	x
 OPERATOR               	>
 NUMBER                 	0
 PARENTHESIS            	)
-OPERATOR               	{
+PARENTHESIS            	{
 KEYWORD                	print
 PARENTHESIS            	(
 IDENTIFIER             	x
 PARENTHESIS            	)
-OPERATOR               	}
+PARENTHESIS            	}
