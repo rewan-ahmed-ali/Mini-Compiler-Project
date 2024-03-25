@@ -17,7 +17,7 @@ def determine_token(lexeme):
         return "KEYWORD"
     elif lexeme.isalpha():
         return "IDENTIFIER"
-    elif lexeme in ["(",")"]:
+    elif lexeme in ["(",")","}","{"]:
         return "PARENTHESIS"
     elif lexeme in [";"]:
         return "SYMBOL"
