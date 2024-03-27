@@ -40,7 +40,7 @@ with open(file_path, 'r') as file:
         hash_value = calculate_hash(variable_name, hash_max)
         symbol_table[variable_name] = hash_value
 
-# Print the hash values for each variable
+
 print("Hash Symbol Table:")
 for variable_name, hash_value in symbol_table.items():
     print(f"hash({variable_name}) = ({len(variable_name)} + {'+'.join(str(ord(char)) for char in variable_name)}) % {hash_max} = {hash_value}")
