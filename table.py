@@ -1,15 +1,7 @@
 import re
 
 def generate_symbol_table(code):
-    """
-    Generates a symbol table from the given code.
-
-    Args:
-        code (str): The code to analyze.
-
-    Returns:
-        list: A list of dictionaries representing the symbol table entries.
-    """
+    
 
     symbol_table = []
     line_number = 1
