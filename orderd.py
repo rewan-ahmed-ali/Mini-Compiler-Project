@@ -12,7 +12,7 @@ def generate_symbol_table(code):
             data_type = match.group("data_type")
             variable_name = match.group("variable_name")
 
-            # Add entry to symbol table
+            # Add entry to symbol table.
             symbol_table.append({
                 "Variable Name": variable_name,
                 "Address": current_address,
