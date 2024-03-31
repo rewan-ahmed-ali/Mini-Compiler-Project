@@ -3,7 +3,7 @@ import re
 def generate_symbol_table(code):
     symbol_table = []
     line_number = 1
-    current_address = 0  # Starting memory address
+    current_address = 0  
 
     for line in code.splitlines():
         # Extract variable declarations
