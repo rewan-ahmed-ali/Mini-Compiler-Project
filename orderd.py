@@ -40,7 +40,7 @@ def generate_symbol_table(code):
     
     return symbol_table
 
-# Read code from file
+
 with open('text.txt', 'r') as file:
     code = file.read()
 
