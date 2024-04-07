@@ -77,6 +77,6 @@ regex_patterns = {
     "NUMBER": r"\d+|\d+\s*\+\s*\d+"
 }
 
-print("\nRegular Expressions:")
-for rule, pattern in regex_patterns.items():
-    print(f"{rule}: {pattern}")
+# print("\nRegular Expressions:")
+# for rule, pattern in regex_patterns.items():
+#     print(f"{rule}: {pattern}")
