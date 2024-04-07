@@ -36,6 +36,10 @@ def generate_symbol_table(code):
     # Sort symbol table entries by variable name
     symbol_table.sort(key=lambda x: x["Variable Name"])
 
+    # Update counter after sorting
+    for i, entry in enumerate(symbol_table):
+        entry["Counter"] = i
+
     # Update address based on sorted order
     for i, entry in enumerate(symbol_table):
         entry["Address"] = i * 2
