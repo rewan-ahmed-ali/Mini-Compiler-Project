@@ -51,7 +51,8 @@ with open('text.txt', 'r') as file:
 # Generate symbol table
 symbol_table = generate_symbol_table(code)
 
-# Print the symbol table
+# Print the symbol table with spaces between entries
 print("Symbol Table:")
 for entry in symbol_table:
     print(entry)
+    print()  # Add a newline after each entry
