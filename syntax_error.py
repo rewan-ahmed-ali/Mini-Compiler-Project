@@ -1,5 +1,5 @@
+# phase2 syntax_error
 import re
-
 def parse_file(filename):
     try:
         with open(filename, 'r') as file:
