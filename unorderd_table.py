@@ -4,6 +4,7 @@ def generate_symbol_table(code):
     symbol_table = []
     line_number = 1
     current_address = 0  # Starting memory address
+    counter = 0
 
     for line in code.splitlines():
         # Extract variable declarations
@@ -13,13 +14,20 @@ def generate_symbol_table(code):
             variable_name = match.group("variable_name")
 
             # Add entry to symbol table
+            if not symbol_table:  # First entry
+                counter = 0
+            else:
+                counter += 1
+
             symbol_table.append({
+                "Counter": counter,
                 "Variable Name": variable_name,
                 "Address": current_address,
                 "Data Type": data_type,
                 "No. of Dimensions": 0,
                 "Line Declaration": line_number,
-                "Reference Line": set([line_number])  # Change list to set
+                "Reference Line": set([line_number]),  # Change list to set
+                
             })
 
             # Increment memory address
