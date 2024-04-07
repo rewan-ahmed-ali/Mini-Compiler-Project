@@ -72,7 +72,6 @@ def parse_print(tokens, pos):
     except IndexError:
         raise SyntaxError("Incomplete print statement")
 
-
 try:
     parse_file("error.txt")
 except SyntaxError as e:
