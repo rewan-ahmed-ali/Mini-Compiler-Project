@@ -1,8 +1,6 @@
 import re
 
 def generate_symbol_table(code):
-    
-
     symbol_table = []
     line_number = 1
     current_address = 0  # Starting memory address
@@ -21,7 +19,7 @@ def generate_symbol_table(code):
                 "Data Type": data_type,
                 "No. of Dimensions": 0,
                 "Line Declaration": line_number,
-                "Reference Line": [line_number]
+                "Reference Line": set([line_number])  # Change list to set
             })
 
             # Increment memory address
@@ -31,7 +29,7 @@ def generate_symbol_table(code):
         for variable in re.findall(r"\b\w+\b", line):
             for entry in symbol_table:
                 if entry["Variable Name"] == variable:
-                    entry["Reference Line"] += [line_number]
+                    entry["Reference Line"].add(line_number)  # Change list to set
                     break
 
         line_number += 1
