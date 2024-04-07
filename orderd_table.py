@@ -51,7 +51,7 @@ with open('text.txt', 'r') as file:
 
 symbol_table = generate_symbol_table(code)
 
-print("Symbol Table:")
+print("Orderd Symbol Table:\n")
 for entry in symbol_table:
     print(entry)
     print()
