@@ -2,6 +2,7 @@ class TreeNode:
     def __init__(self, data):
         self.data = data
         self.children = []
+        self.parent = None
 
 def build_symbol_table(file_name):
     root = TreeNode(None)  # Root node
@@ -33,13 +34,16 @@ def build_symbol_table(file_name):
     return root
 
 
-def print_tree(node, depth=0):
+def print_tree(node, depth=0, is_left=False):
     if node is not None:
-        print("  " * depth, end='')
         if node.data:
+            print("  " * depth, end='')
             print(f"|L|{node.data[1]}|......|R")
-        for child in node.children:
-            print_tree(child, depth + 1)
+        for idx, child in enumerate(node.children):
+            if is_left:
+                print_tree(child, depth + 1, idx == 0)  # Draw on left
+            else:
+                print_tree(child, depth + 1, idx == len(node.children) - 1)  # Draw on right
 
 
 file_name = "text.txt"
