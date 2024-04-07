@@ -7,22 +7,21 @@ with open('text.txt', 'r') as file:
 # Split the text into words and operators using regular expressions
 split_text = re.findall(r'\b\w+\b|[^\w\s]', file_contents)
 
-
 def determine_token(lexeme):
     if lexeme.isnumeric():
         return "NUMBER"
-    elif lexeme in ["if", "print", "int"]:
+    elif lexeme in ["for", "while", "if", "else"]:
+        return lexeme.upper()
+    elif lexeme in ["in","print","range","int"]:
         return "KEYWORD"
     elif lexeme.isalpha():
         return "IDENTIFIER"
-    elif lexeme in ["(", ")", "{", "}"]:
+    elif lexeme in ["(",")","}","{"]:
         return "PARENTHESIS"
     elif lexeme in [";"]:
         return "SYMBOL"
-    elif lexeme in ["=", "+", ">"]:
-        return "OPERATOR"
     else:
-        return "UNKNOWN"
+        return "OPERATOR"
 
 
 # token and lexeme counts
@@ -62,7 +61,6 @@ grammar_rules = {
     "Conditional": ["'if' '(' identifier '>' NUMBER ')' '{' Statement '}'"],
     "PrintStatement": ["'print' '(' Variable ')' ';'"]
 }
-
 # Create the table headers
 print("\nGrammar Table:")
 print("\nRule\t\t\tComponents")
@@ -72,11 +70,11 @@ for rule, components in grammar_rules.items():
 
 # Define regular expressions
 regex_patterns = {
-    "Assignment": r"int\s+[a-zA-Z_][a-zA-Z0-9_]*\s*=\s*\d+\s*;",
+    "Assignment": r"int\s+[a-zA-Z_][a-zA-Z0-9_]*\s*=\s*(\d+|\d+\s*\+\s*\d+)\s*;",
     "Conditional": r"if\s*\(\s*[a-zA-Z_][a-zA-Z0-9_]*\s*>\s*\d+\s*\)\s*\{\s*Statement\s*\}",
     "PrintStatement": r"print\s*\(\s*[a-zA-Z_][a-zA-Z0-9_]*\s*\)\s*;",
     "identifier": r"[a-zA-Z_][a-zA-Z0-9_]*",
-    "NUMBER": r"\d+"
+    "NUMBER": r"\d+|\d+\s*\+\s*\d+"
 }
 
 print("\nRegular Expressions:")
