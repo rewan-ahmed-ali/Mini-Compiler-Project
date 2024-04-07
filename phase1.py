@@ -11,18 +11,18 @@ split_text = re.findall(r'\b\w+\b|[^\w\s]', file_contents)
 def determine_token(lexeme):
     if lexeme.isnumeric():
         return "NUMBER"
-    elif lexeme in ["for", "while", "if", "else"]:
-        return lexeme.upper()
-    elif lexeme in ["in","print","range","int"]:
+    elif lexeme in ["if", "print", "int"]:
         return "KEYWORD"
     elif lexeme.isalpha():
         return "IDENTIFIER"
-    elif lexeme in ["(",")","}","{"]:
+    elif lexeme in ["(", ")", "{", "}"]:
         return "PARENTHESIS"
     elif lexeme in [";"]:
         return "SYMBOL"
-    else:
+    elif lexeme in ["=", "+", ">"]:
         return "OPERATOR"
+    else:
+        return "UNKNOWN"
 
 
 # token and lexeme counts
@@ -52,16 +52,15 @@ for token, count in token_counts.items():
 
 # Define the grammar rules
 grammar_rules = {
-    "program": ["statement_list"],
-    "statement_list": ["statement ';' statement_list", "statement ';'"],
-    "statement": ["assignment_stmt", "if_stmt", "print_stmt"],
-    "assignment_stmt": ["'int' identifier '=' expression"],
-    "if_stmt": ["'if' '(' expression ')' '{' statement_list '}'"],
-    "print_stmt": ["'print' '(' expression ')' ';'"],
-    "expression": ["identifier", "number", "expression '+' expression",
-                   "expression '>' expression"],
-    "identifier": "[a-zA-Z_][a-zA-Z0-9_]*",
-    "number": r"\d+"
+    "S": ["Statement"],
+    "Statement": ["Assignment", "Conditional", "PrintStatement"],
+    "Assignment": ["'int' identifier '=' NUMBER ';'"],
+    "identifier": ["'a'", "'b'", "'c'", "'x'", "'y'", "'z'", "'r'"],
+    "NUMBER": ["DIGIT", "DIGIT DIGITS"],
+    "DIGIT": ["'0'", "'1'", "'2'", "'3'", "'4'", "'5'", "'6'", "'7'", "'8'", "'9'"],
+    "DIGITS": ["DIGIT", "DIGIT DIGITS"],
+    "Conditional": ["'if' '(' identifier '>' NUMBER ')' '{' Statement '}'"],
+    "PrintStatement": ["'print' '(' Variable ')' ';'"]
 }
 
 # Create the table headers
@@ -73,11 +72,11 @@ for rule, components in grammar_rules.items():
 
 # Define regular expressions
 regex_patterns = {
-    "assignment_stmt": r"int\s+[a-zA-Z_][a-zA-Z0-9_]*\s*=\s*\d+\s*;",
-    "if_stmt": r"if\s*\(\s*[a-zA-Z_][a-zA-Z0-9_]*\s*>\s*\d+\s*\)\s*{\s*print\s*\(\s*[a-zA-Z_][a-zA-Z0-9_]*\s*\)\s*;\s*}\s*;",
-    "print_stmt": r"print\s*\(\s*[a-zA-Z_][a-zA-Z0-9_]*\s*\)\s*;",
+    "Assignment": r"int\s+[a-zA-Z_][a-zA-Z0-9_]*\s*=\s*\d+\s*;",
+    "Conditional": r"if\s*\(\s*[a-zA-Z_][a-zA-Z0-9_]*\s*>\s*\d+\s*\)\s*\{\s*Statement\s*\}",
+    "PrintStatement": r"print\s*\(\s*[a-zA-Z_][a-zA-Z0-9_]*\s*\)\s*;",
     "identifier": r"[a-zA-Z_][a-zA-Z0-9_]*",
-    "number": r"\d+"
+    "NUMBER": r"\d+"
 }
 
 print("\nRegular Expressions:")
