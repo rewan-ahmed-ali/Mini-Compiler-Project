@@ -1,19 +1,18 @@
 Grammar Rules:
-program ::= statement_list
-statement_list ::= statement ";" statement_list | statement ";"
-statement ::= assignment_stmt | if_stmt | print_stmt
-assignment_stmt ::= "int" identifier "=" expression
-if_stmt ::= "if" "(" expression ")" "{" statement_list "}"
-print_stmt ::= "print" "(" expression ")" ";"
-expression ::= identifier | number | expression "+" expression | expression ">" expression
-identifier ::= [a-zA-Z_][a-zA-Z0-9_]*
-number ::= \d+
-
+S -> Statement
+    Statement -> Assignment | Conditional | PrintStatement
+    Assignment -> 'int' identifier '=' NUMBER ';'
+    identifier -> 'a' | 'b' | 'c' | 'x' | 'y' | 'z' | 'r'
+    NUMBER ->  DIGIT | DIGIT DIGITS
+    DIGIT -> '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9'
+    DIGITS -> DIGIT | DIGIT DIGITS
+    Conditional -> 'if' '(' identifier '>' NUMBER ')' '{' Statement '}'
+    PrintStatement -> 'print' '(' Variable ')' ';'
 
 Regular Expressions:
 
-assignment_stmt: int\s+[a-zA-Z_][a-zA-Z0-9_]*\s*=\s*\d+\s*;
-if_stmt: if\s*\(\s*[a-zA-Z_][a-zA-Z0-9_]*\s*>\s*\d+\s*\)\s*{\s*print\s*\(\s*[a-zA-Z_][a-zA-Z0-9_]*\s*\)\s*;\s*}\s*;
-print_stmt: print\s*\(\s*[a-zA-Z_][a-zA-Z0-9_]*\s*\)\s*;
-identifier: [a-zA-Z_][a-zA-Z0-9_]*
-number: \d+
+    "Assignment": r"int\s+[a-zA-Z_][a-zA-Z0-9_]*\s*=\s*(\d+|\d+\s*\+\s*\d+)\s*;",
+    "Conditional": r"if\s*\(\s*[a-zA-Z_][a-zA-Z0-9_]*\s*>\s*\d+\s*\)\s*\{\s*Statement\s*\}",
+    "PrintStatement": r"print\s*\(\s*[a-zA-Z_][a-zA-Z0-9_]*\s*\)\s*;",
+    "identifier": r"[a-zA-Z_][a-zA-Z0-9_]*",
+    "NUMBER": r"\d+|\d+\s*\+\s*\d+"
