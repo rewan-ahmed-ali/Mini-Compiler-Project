@@ -4,12 +4,12 @@ import nltk
 variable_declaration_cfg = nltk.CFG.fromstring("""
     S -> Statement
     Statement -> Assignment | Conditional | PrintStatement
-    Assignment -> 'int' Variable '=' NUMBER ';'
-    Variable -> 'a' | 'b' | 'c' | 'x' | 'y' | 'z' | 'r'
+    Assignment -> 'int' identifier '=' NUMBER ';'
+    identifier -> 'a' | 'b' | 'c' | 'x' | 'y' | 'z' | 'r'
     NUMBER ->  DIGIT | DIGIT DIGITS
     DIGIT -> '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9'
     DIGITS -> DIGIT | DIGIT DIGITS
-    Conditional -> 'if' '(' Variable '>' NUMBER ')' '{' Statement '}'
+    Conditional -> 'if' '(' identifier '>' NUMBER ')' '{' Statement '}'
     PrintStatement -> 'print' '(' Variable ')' ';'
 """)
 
