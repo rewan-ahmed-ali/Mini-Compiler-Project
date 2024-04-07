@@ -1,12 +1,13 @@
 class TreeNode:
     def __init__(self, data):
         self.data = data
-        self.children = []
+        self.link = None  # Link field for the linked list
         self.parent = None
 
 def build_symbol_table(file_name):
     root = TreeNode(None)  # Root node
     current_scope = root
+    first_node = None
 
     with open(file_name, 'r') as file:
         for line in file:
@@ -25,27 +26,28 @@ def build_symbol_table(file_name):
             new_node = TreeNode((data_type, identifier))
 
             if line.endswith('{'):
-                current_scope.children.append(new_node)
-                new_node.parent = current_scope
+                if not first_node:
+                    first_node = new_node
+                else:
+                    current_scope.link = new_node  # Linking the new node to the previous one
                 current_scope = new_node
             else:
-                current_scope.children.append(new_node)
+                if not first_node:
+                    first_node = new_node
+                else:
+                    current_scope.link = new_node
+                current_scope = new_node
 
-    return root
+    return first_node  # Return the pointer to the first record
 
 
-def print_tree(node, depth=0, is_left=False):
-    if node is not None:
-        if node.data:
-            print("  " * depth, end='')
-            print(f"|L|{node.data[1]}|......|R")
-        for idx, child in enumerate(node.children):
-            if is_left:
-                print_tree(child, depth + 1, idx == 0)  # Draw on left
-            else:
-                print_tree(child, depth + 1, idx == len(node.children) - 1)  # Draw on right
+def print_linked_list(first_node):
+    current_node = first_node
+    while current_node:
+        print(f"|L|{current_node.data[1]}|......|R")
+        current_node = current_node.link
 
 
 file_name = "text.txt"
-symbol_table_root = build_symbol_table(file_name)
-print_tree(symbol_table_root)
+first_record = build_symbol_table(file_name)
+print_linked_list(first_record)
