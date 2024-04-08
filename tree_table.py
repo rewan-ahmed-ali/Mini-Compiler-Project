@@ -37,7 +37,6 @@ def build_symbol_table(file_name):
                 else:
                     current_scope.link = new_node
                 current_scope = new_node
-
     return first_node  # Return the pointer to the first record
 
 
