@@ -29,7 +29,7 @@ def parse(tokens):
             elif token == ';':
                 pos += 1
             else:
-                raise SyntaxError("Unexpected int before identifier'{}'".format(token))
+                raise SyntaxError("Unexpected KEYWORD before identifier '{}'".format(token))
     except SyntaxError as e:
         print("Syntax Error:", e)
 
