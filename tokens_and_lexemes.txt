@@ -13,6 +13,13 @@ IDENTIFIER             	x
 OPERATOR               	=
 NUMBER                 	5
 SYMBOL                 	;
+KEYWORD                	float
+IDENTIFIER             	b
+OPERATOR               	=
+NUMBER                 	1
+OPERATOR               	.
+NUMBER                 	2
+SYMBOL                 	;
 IF                     	if
 PARENTHESIS            	(
 IDENTIFIER             	x
