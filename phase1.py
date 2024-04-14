@@ -12,7 +12,7 @@ def determine_token(lexeme):
         return "NUMBER"
     elif lexeme in ["for", "while", "if", "else"]:
         return lexeme.upper()
-    elif lexeme in ["in","print","range","int"]:
+    elif lexeme in ["in","print","range","int","float"]:
         return "KEYWORD"
     elif lexeme.isalpha():
         return "IDENTIFIER"
