@@ -26,8 +26,7 @@ def generate_symbol_table(code):
                 "Data Type": data_type,
                 "No. of Dimensions": 0,
                 "Line Declaration": line_number,
-                "Reference Line": set([line_number]),  # Change list to set
-                
+                "Reference Line": line_number,  # Set to the line number of declaration by default
             })
 
             # Increment memory address
@@ -37,7 +36,9 @@ def generate_symbol_table(code):
         for variable in re.findall(r"\b\w+\b", line):
             for entry in symbol_table:
                 if entry["Variable Name"] == variable:
-                    entry["Reference Line"].add(line_number)  # Change list to set
+                    if entry["Line Declaration"] != line_number:  # Ensure it's not the declaration line itself
+                        entry["Reference Line"] = set()  # Change to set
+                        entry["Reference Line"].add(line_number)
                     break
 
         line_number += 1
@@ -45,7 +46,7 @@ def generate_symbol_table(code):
     return symbol_table
 
 # Read code from file
-with open('text.txt', 'r') as file:
+with open('y.txt', 'r') as file:
     code = file.read()
 
 # Generate symbol table
