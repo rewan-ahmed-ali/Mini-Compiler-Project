@@ -1,4 +1,5 @@
 int r = 6;
 int a = 1;
 int x = 5 ;
+float b = 1.2;
 if ( x > 0 ) { print ( x ) }
