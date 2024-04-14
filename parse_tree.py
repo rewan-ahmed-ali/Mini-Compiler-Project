@@ -1,4 +1,5 @@
 import nltk
+
 class TreeNode:
     def __init__(self, value):
         self.value = value
@@ -69,9 +70,9 @@ with open('text.txt', 'r') as file:
 
 # Parse each line and draw parse trees
 for line in lines:
-    # Tokenize the statement properly
-    tokens = nltk.word_tokenize(line.strip())
-    # Parse the statement using the provided parser
-    for tree in parser.parse(tokens):
-        print(tree)
-        # tree.pretty_print()
+    if "float" not in line:  # Skip lines containing "float"
+        # Tokenize the statement properly
+        tokens = nltk.word_tokenize(line.strip())
+        # Parse the statement using the provided parser
+        for tree in parser.parse(tokens):
+            print(tree)
