@@ -1,4 +1,5 @@
-# Define the hash function based on the provided formula
+import re
+
 def calculate_hash(variable_name, hash_max):
     variable_length = len(variable_name)  # Calculate the length of the variable name
     ascii_sum = sum(ord(char) for char in variable_name)  # Calculate the sum of ASCII values
@@ -19,27 +20,16 @@ with open(file_path, 'r') as file:
         if not line:
             continue
         
-        # Check if the line starts with "int"
-        if line.startswith("int"):
-            # Split the line by "=" to extract variable name and value
-            parts = line.split("=")
-            # Check if there are at least two parts (variable name and value)
-            if len(parts) < 2:
-                continue  # Skip lines without assignment
-            variable_name = parts[0].split()[1].strip()  # Extract variable name after "int"
+        # Extract variable name from the line
+        match = re.match(r"^\s*\w+\s+(\w+)\s*=", line)
+        if match:
+            variable_name = match.group(1)
         else:
-            # Split the line by "=" to extract variable name and value
-            parts = line.split("=")
-            # Check if there are at least two parts (variable name and value)
-            if len(parts) < 2:
-                continue  # Skip lines without assignment
-            variable_name = parts[0].strip()
+            continue
         
-        variable_value = parts[1].strip()
         # Calculate the hash and store it in the symbol table
         hash_value = calculate_hash(variable_name, hash_max)
         symbol_table[variable_name] = hash_value
-
 
 print("Hash Symbol Table:")
 for variable_name, hash_value in symbol_table.items():
