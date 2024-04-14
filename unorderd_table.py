@@ -26,18 +26,18 @@ def generate_symbol_table(code):
                 "Data Type": data_type,
                 "No. of Dimensions": 0,
                 "Line Declaration": line_number,
-                "Reference Line": line_number,  # Set to the line number of declaration by default
+                "Reference Line": set(),  # Initialize as an empty set
             })
 
             # Increment memory address
             current_address += 2  # Assuming each variable occupies 4 bytes
 
-        # Track variable references
+        # Track variable references (modified)
         for variable in re.findall(r"\b\w+\b", line):
             for entry in symbol_table:
                 if entry["Variable Name"] == variable:
-                    if entry["Line Declaration"] != line_number:  # Ensure it's not the declaration line itself
-                        entry["Reference Line"] = set()  # Change to set
+                    # Only add line number if it's not the declaration line
+                    if line_number != entry["Line Declaration"]:
                         entry["Reference Line"].add(line_number)
                     break
 
@@ -46,7 +46,7 @@ def generate_symbol_table(code):
     return symbol_table
 
 # Read code from file
-with open('y.txt', 'r') as file:
+with open('text.txt', 'r') as file:
     code = file.read()
 
 # Generate symbol table
@@ -55,5 +55,6 @@ symbol_table = generate_symbol_table(code)
 # Print the symbol table with spaces between entries
 print("Unorderd Symbol Table:\n")
 for entry in symbol_table:
-    print(entry)
+    # Print with empty {} instead of set()
+    print(str(entry).replace("set()", "{}")) 
     print()  # Add a newline after each entry
