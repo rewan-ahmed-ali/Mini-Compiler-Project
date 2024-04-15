@@ -16,8 +16,11 @@ def insert(root, value):
 
 def print_tree(root, level=0, direction='Root', indent=0):
     if root is not None:
-        print(' ' * indent + direction + ':', root.value)
-        print_tree(root.left, level + 1, 'Left', indent - 10)
+        if level == 0:
+            print(' ' * indent + direction + ':', root.value)
+        else:
+            print(' ' * indent + direction + ':', root.value)
+        print_tree(root.left, level + 1, 'Left', indent - 20)
         print_tree(root.right, level + 1, 'Right', indent + 10)
 
 def main():
