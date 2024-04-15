@@ -3,7 +3,7 @@ import re
 def generate_symbol_table(code):
     symbol_table = []
     line_number = 1
-    current_address = 0  # Starting memory address
+    current_address = 0  
     counter = 0
 
     for line in code.splitlines():
@@ -15,19 +15,16 @@ def generate_symbol_table(code):
 
             # Add entry to symbol table
             symbol_table.append({
-                "Counter": 0,  # Start with Counter as 0
+                "Counter": counter,  
                 "Variable Name": variable_name,
                 "Address": current_address,
                 "Data Type": data_type,
                 "No. of Dimensions": 0,
                 "Line Declaration": line_number,
-                "Reference Line": set(),  # Initialize as an empty set
+                "Reference Line": set(),  
             })
+            current_address += 2  
 
-            # Increment memory address
-            current_address += 2  # Assuming each variable occupies 4 bytes
-
-        # Track variable references (modified)
         for variable in re.findall(r"\b\w+\b", line):
             for entry in symbol_table:
                 if entry["Variable Name"] == variable:
@@ -52,16 +49,15 @@ def generate_symbol_table(code):
 
     return symbol_table
 
-# Read code from file
+
 with open('text.txt', 'r') as file:
     code = file.read()
 
-# Generate symbol table
 symbol_table = generate_symbol_table(code)
 
-# Print the symbol table with spaces between entries
+
 print("Ordered Symbol Table:\n")
 for entry in symbol_table:
     # Print with empty {} instead of set()
     print(str(entry).replace("set()", "{}")) 
-    print()  # Add a newline after each entry
+    print()  
