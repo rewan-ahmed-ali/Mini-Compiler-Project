@@ -48,11 +48,12 @@ with open('text.txt', 'r') as file:
 symbol_table = generate_symbol_table(code)
 
 # Print the symbol table with spaces between entries
-print("Unordered Symbol Table:\n")
+print("\nUnordered Symbol Table:\n")
+print(f"{'Counter':<8}{'Variable Name':<15}{'Address':<10}{'Data Type':<15}{'No. of Dimensions':<20}{'Line Declaration':<20}{'Reference Line'}")
 for entry in symbol_table:
     # Print with empty {} instead of set()
-    print(str(entry).replace("set()", "{}")) 
-    print()  # Add a newline after each entry
+    print(f"{entry['Counter']:<8}{entry['Variable Name']:<15}{entry['Address']:<10}{entry['Data Type']:<15}{entry['No. of Dimensions']:<20}{entry['Line Declaration']:<20}{str(entry['Reference Line']).replace('set()', '{}')}")
+print()  # Add a newline after the table
 
 import re
 
@@ -114,14 +115,13 @@ with open('text.txt', 'r') as file:
 
 # Generate symbol table
 symbol_table = generate_symbol_table(code)
-print("------------------------------------------------------------------------------\n")
-# Print the symbol table with spaces between entries
+
 print("Ordered Symbol Table:\n")
+print(f"{'Counter':<8}{'Variable Name':<15}{'Address':<10}{'Data Type':<15}{'No. of Dimensions':<20}{'Line Declaration':<20}{'Reference Line'}")
 for entry in symbol_table:
     # Print with empty {} instead of set()
-    print(str(entry).replace("set()", "{}")) 
-    print()  # Add a newline after each entry
-
+    print(f"{entry['Counter']:<8}{entry['Variable Name']:<15}{entry['Address']:<10}{entry['Data Type']:<15}{entry['No. of Dimensions']:<20}{entry['Line Declaration']:<20}{str(entry['Reference Line']).replace('set()', '{}')}")
+print()  # Add a newline after the table
 
 import re
 
@@ -155,7 +155,11 @@ with open(file_path, 'r') as file:
         # Calculate the hash and store it in the symbol table
         hash_value = calculate_hash(variable_name, hash_max)
         symbol_table[variable_name] = hash_value
-print("------------------------------------------------------------------------------\n")
+
 print("Hash Symbol Table:\n")
+
 for variable_name, hash_value in symbol_table.items():
     print(f"hash({variable_name}) = ({len(variable_name)} + {'+'.join(str(ord(char)) for char in variable_name)}) % {hash_max} = {hash_value}")
+print(f"\n{'Variable Name':<15}{'Hash Value'}")
+for variable_name, hash_value in symbol_table.items():
+    print(f"{variable_name:<15}{hash_value}")
