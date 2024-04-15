@@ -41,6 +41,7 @@ def main():
     root = None
     for item in variables:
         root = insert(root, item)
+    print("\nTree Structure Symbol Table:\n")
     print_tree(root, indent=20)
 
 if __name__ == "__main__":
