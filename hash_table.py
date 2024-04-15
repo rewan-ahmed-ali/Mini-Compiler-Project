@@ -34,3 +34,7 @@ with open(file_path, 'r') as file:
 print("Hash Symbol Table:")
 for variable_name, hash_value in symbol_table.items():
     print(f"hash({variable_name}) = ({len(variable_name)} + {'+'.join(str(ord(char)) for char in variable_name)}) % {hash_max} = {hash_value}")
+
+print(f"\n{'Variable Name':<15}{'Hash Value'}")
+for variable_name, hash_value in symbol_table.items():
+    print(f"{variable_name:<15}{hash_value}")
