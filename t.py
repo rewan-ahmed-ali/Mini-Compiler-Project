@@ -1,14 +1,14 @@
-class Node:
-    def __init__(self, value):
-        self.value = value
+class TreeNode:
+    def __init__(self, data):
+        self.data = data
         self.left = None
         self.right = None
 
 def insert(root, value):
     if root is None:
-        return Node(value)
+        return TreeNode(value)
     else:
-        if value < root.value:
+        if value < root.data:
             root.left = insert(root.left, value)
         else:
             root.right = insert(root.right, value)
@@ -17,9 +17,9 @@ def insert(root, value):
 def print_tree(root, level=0, direction='Root', indent=0):
     if root is not None:
         if level == 0:
-            print(' ' * indent + direction + ':', root.value)
+            print(' ' * indent + direction + ':', root.data)
         else:
-            print(' ' * indent + direction + ':', root.value)
+            print(' ' * indent + direction + ':', root.data)
         print_tree(root.left, level + 1, 'Left', indent - 20)
         print_tree(root.right, level + 1, 'Right', indent + 10)
 
