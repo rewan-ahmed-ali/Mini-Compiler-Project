@@ -9,9 +9,15 @@ def insert(root, value):
         return TreeNode(value)
     else:
         if value < root.data:
-            root.left = insert(root.left, value)
+            if root.left is None:
+                root.left = TreeNode(value)
+            else:
+                insert(root.left, value)
         else:
-            root.right = insert(root.right, value)
+            if root.right is None:
+                root.right = TreeNode(value)
+            else:
+                insert(root.right, value)
     return root
 
 def print_tree(root, level=0, direction='Root', indent=0):
