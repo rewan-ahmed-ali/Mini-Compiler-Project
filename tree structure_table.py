@@ -23,11 +23,11 @@ def insert(root, value):
 def print_tree(root, level=0, direction='Root', indent=0):
     if root is not None:
         if level == 0:
-            print(' ' * indent + direction + ':', root.data)
+            print(' ' * indent + direction + ':', "|L|" + root.data + "|....|R|")
         else:
-            print(' ' * indent + direction + ':', root.data)
-        print_tree(root.left, level + 1, 'Left', indent - 20)
-        print_tree(root.right, level + 1, 'Right', indent + 10)
+            print(' ' * indent + direction + ':', "|L|" + root.data + "|....|R|")
+        print_tree(root.left, level + 1, 'Left', indent - 30)
+        print_tree(root.right, level + 1, 'Right', indent + 20)
 
 def main():
     variables = []
@@ -37,7 +37,7 @@ def main():
                 variable = line.split()[1].strip()
                 variables.append(variable)
     
-    # Construct the binary search tree
+    # Binary Tree Symbol Table
     root = None
     for item in variables:
         root = insert(root, item)
