@@ -53,13 +53,18 @@ for token, count in token_counts.items():
 grammar_rules = {
     "S": ["Statement"],
     "Statement": ["Assignment", "Conditional", "PrintStatement"],
-    "Assignment": ["'int' identifier '=' NUMBER ';'"],
+    "Assignment": ["Type identifier '=' Value ';'"],
+    "Type": ["'int'", "'float'"],
     "identifier": ["'a'", "'b'", "'c'", "'x'", "'y'", "'z'", "'r'"],
+    "Value": ["NUMBER", "FLOAT"],
     "NUMBER": ["DIGIT", "DIGIT DIGITS"],
+    "FLOAT": ["DIGIT '.' DIGIT", "DIGIT DIGITS '.' DIGIT", "DIGIT '.' DIGITS", "DIGIT DIGITS '.' DIGITS"],
     "DIGIT": ["'0'", "'1'", "'2'", "'3'", "'4'", "'5'", "'6'", "'7'", "'8'", "'9'"],
     "DIGITS": ["DIGIT", "DIGIT DIGITS"],
-    "Conditional": ["'if' '(' identifier '>' NUMBER ')' '{' Statement '}'"],
-    "PrintStatement": ["'print' '(' Variable ')' ';'"]
+    "Conditional": ["'if' '(' Condition ')' '{' Statement '}'"],
+    "Condition": ["identifier '>' NUMBER"],
+    "PrintStatement": ["'print' '(' identifier ')' ';'"]
+
 }
 # Create the table headers
 print("\nGrammar Table:")
@@ -70,12 +75,13 @@ for rule, components in grammar_rules.items():
 
 # Define regular expressions
 regex_patterns = {
-    "Assignment": r"int\s+[a-zA-Z_][a-zA-Z0-9_]*\s*=\s*(\d+|\d+\s*\+\s*\d+)\s*;",
+    "Assignment": r"(int|float)\s+[a-zA-Z_][a-zA-Z0-9_]*\s*=\s*(\d+|\d+\.\d+)\s*;",
     "Conditional": r"if\s*\(\s*[a-zA-Z_][a-zA-Z0-9_]*\s*>\s*\d+\s*\)\s*\{\s*Statement\s*\}",
     "PrintStatement": r"print\s*\(\s*[a-zA-Z_][a-zA-Z0-9_]*\s*\)\s*;",
     "identifier": r"[a-zA-Z_][a-zA-Z0-9_]*",
-    "NUMBER": r"\d+|\d+\s*\+\s*\d+"
+    "NUMBER": r"\d+|\d+\.\d+"
 }
+
 
 # print("\nRegular Expressions:")
 # for rule, pattern in regex_patterns.items():
