@@ -1,41 +1,46 @@
-def calculate_first(grammar):
-    first = {}
-    for non_terminal in grammar:
-        first[non_terminal] = set()
+def first(symbol, grammar):
+  """
+  Calculates the First set for a given symbol in the grammar.
 
-    def calculate_first_helper(symbol):
-        if symbol in first:
-            return first[symbol]
+  Args:
+      symbol: The grammar symbol for which to calculate the First set.
+      grammar: A dictionary representing the grammar, where keys are non-terminals 
+               and values are lists of productions.
 
-        for production in grammar[symbol]:
-            for symbol in production:
-                first_set = calculate_first_helper(symbol)
-                first[symbol].update(first_set)
-                if 'e' not in first_set:
-                    break
-            else:
-                first[symbol].add('e')
+  Returns:
+      A set containing the First set for the symbol.
+  """
 
-        return first[symbol]
+  first_set = set()
+  if symbol.islower() or symbol == "''":  # Terminal or epsilon
+    first_set.add(symbol)
+  else:
+    for production in grammar[symbol]:
+      first_symbol = production[0]
+      if first_symbol == "''": 
+        if len(production) > 1:
+          first_set.update(first(production[1], grammar))
+        else:
+          first_set.add("''") 
+      else:
+        if first_symbol in grammar:  # Check if it's a non-terminal
+          first_set.update(first(first_symbol, grammar))
+        else:
+          first_set.add(first_symbol) # Add the terminal directly
+  return first_set
 
-    for non_terminal in grammar:
-        calculate_first_helper(non_terminal)
-
-    return first
-
-
-# Define the grammar
+# Define your grammar
 grammar = {
-    'E': [['T', 'E\'']],
-    'E\'': [['+', 'T', 'E\''], ['']],
-    'T': [['F', 'T\'']],
-    'T\'': [['*', 'F', 'T\''], ['']],
-    'F': [['(', 'E', ')'], ['id']]
+  "E": ["TE'"],
+  "E'": ["+TE'", "''"],
+  "T": ["FT'"],
+  "T'": ["*FT'", "''"],
+  "F": ["(E)", "id"]
 }
 
-# Calculate the First sets
-first_sets = calculate_first(grammar)
-
-# Print the First sets
-for non_terminal, terminals in first_sets.items():
-    print(f"First({non_terminal}) = {terminals}")
+# Calculate First sets
+print("First(E) =", first("E", grammar))
+print("First(E') =", first("E'", grammar))
+print("First(T) =", first("T", grammar))
+print("First(T') =", first("T'", grammar))
+print("First(F) =", first("F", grammar))
