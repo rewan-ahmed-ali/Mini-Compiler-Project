@@ -48,7 +48,7 @@ print_statement.add_child(expression_x)
 # Printing the tree structure
 program.print_tree()
 
-# Define the extended context-free grammar
+
 variable_declaration_cfg = nltk.CFG.fromstring("""
     S -> Statement
     Statement -> Assignment | Conditional | PrintStatement
