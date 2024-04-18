@@ -56,7 +56,7 @@ def follow(grammar, start_symbol, symbol):
                     follow_set |= first_symb
     return follow_set
 
-# القواعد النحوية
+
 grammar = [
     ('E', 'TA'),
     ('A', '+TA'),
@@ -68,7 +68,7 @@ grammar = [
     ('F', 'd'),
 ]
 
-# تحديد الرموز اللا غير المحددة والحددة
+#تحديد الرموز non_terminals  terminals
 non_terminals_set = set(left_side for left_side, _ in grammar)
 terminals_set = set()
 for nt in non_terminals_set:
@@ -87,25 +87,25 @@ for nt in non_terminals:
     first_sets[nt] = first(grammar, nt)
     follow_sets[nt] = follow(grammar, "E", nt)
 
-# إنشاء جدول جميل للقواعد النحوية
+
 grammar_table = PrettyTable()
 grammar_table.field_names = ['Non-terminal', 'Production']
 for rule in grammar:
     grammar_table.add_row([rule[0], rule[1]])
 
-# إنشاء جدول جميل لقوائم First
+
 first_table = PrettyTable()
 first_table.field_names = ['Non-terminal', 'First Set']
 for nt in non_terminals:
     first_table.add_row([nt, first_sets[nt]])
 
-# إنشاء جدول جميل لقوائم Follow
+
 follow_table = PrettyTable()
 follow_table.field_names = ['Non-terminal', 'Follow Set']
 for nt in non_terminals:
     follow_table.add_row([nt, follow_sets[nt]])
 
-# إنشاء جدول جميل لل Parse Table
+
 parse_table = PrettyTable()
 parse_table.field_names = ['NT / T'] + terminals
 for nt in non_terminals:
@@ -122,7 +122,7 @@ for nt in non_terminals:
             row_values.append('')
     parse_table.add_row([nt] + row_values)
 
-# طباعة النتائج
+
 print("Grammar Rules:")
 print(grammar_table)
 print("\nFirst Sets:")
