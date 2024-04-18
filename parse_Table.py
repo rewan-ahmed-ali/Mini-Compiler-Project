@@ -1,5 +1,6 @@
 from prettytable import PrettyTable
 
+# تعريف دالة First
 def first(grammar, symbol):
     first_set = set()
     symbol_set = {
@@ -16,6 +17,7 @@ def first(grammar, symbol):
 
     return first_set
 
+# تعريف دالة Production_rule_3
 def Production_rule_3(grammar, element):
     first_set = set()
     i = 0
@@ -27,6 +29,7 @@ def Production_rule_3(grammar, element):
         i += 1
     return first_set
 
+# تعريف دالة Follow
 def follow(grammar, start_symbol, symbol):
     follow_set = set()
 
@@ -53,6 +56,7 @@ def follow(grammar, start_symbol, symbol):
                     follow_set |= first_symb
     return follow_set
 
+# القواعد النحوية
 grammar = [
     ('E', 'TA'),
     ('A', '+TA'),
@@ -64,30 +68,51 @@ grammar = [
     ('F', 'd'),
 ]
 
+# تحديد الرموز اللا غير المحددة والحددة
 non_terminals_set = set(left_side for left_side, _ in grammar)
 terminals_set = set()
 for nt in non_terminals_set:
-    terminals_set |= first(grammar, nt).difference({'epsilon'})
-    terminals_set |= follow(grammar, "E", nt)
+    terminals_set |= {c for c in nt if c.islower()}
+    terminals_set |= {c for c in nt if c.isnumeric()}
+    terminals_set |= {'+', '*', '(', ')'}
 
-non_terminals = list(non_terminals_set)
-terminals = list(terminals_set)
-table = PrettyTable()
-table.field_names = ['NT / T'] + terminals
+non_terminals = sorted(list(non_terminals_set))
+terminals = sorted(list(terminals_set))
 
-print("First Sets:")
+# تحديد القوائم First و Follow
+first_sets = {}
+follow_sets = {}
+
 for nt in non_terminals:
-    print(f'First({nt}) = {first(grammar, nt)}')
+    first_sets[nt] = first(grammar, nt)
+    follow_sets[nt] = follow(grammar, "E", nt)
 
-print("\nFollow Sets:")
+# إنشاء جدول جميل للقواعد النحوية
+grammar_table = PrettyTable()
+grammar_table.field_names = ['Non-terminal', 'Production']
+for rule in grammar:
+    grammar_table.add_row([rule[0], rule[1]])
+
+# إنشاء جدول جميل لقوائم First
+first_table = PrettyTable()
+first_table.field_names = ['Non-terminal', 'First Set']
 for nt in non_terminals:
-    print(f'Follow({nt}) = {follow(grammar, "E", nt)}')
+    first_table.add_row([nt, first_sets[nt]])
 
+# إنشاء جدول جميل لقوائم Follow
+follow_table = PrettyTable()
+follow_table.field_names = ['Non-terminal', 'Follow Set']
+for nt in non_terminals:
+    follow_table.add_row([nt, follow_sets[nt]])
+
+# إنشاء جدول جميل لل Parse Table
+parse_table = PrettyTable()
+parse_table.field_names = ['NT / T'] + terminals
 for nt in non_terminals:
     productions = [prod[1] for prod in grammar if prod[0] == nt and prod[1] != 'epsilon']
     row_values = []
-    first_nt = first(grammar, nt)
-    follow_nt = follow(grammar, 'E', nt)
+    first_nt = first_sets[nt]
+    follow_nt = follow_sets[nt]
     for t in terminals:
         if t in first_nt:
             row_values.append(f'{nt} => {productions}')
@@ -95,7 +120,14 @@ for nt in non_terminals:
             row_values.append(f'{nt} => epsilon')
         else:
             row_values.append('')
-    table.add_row([nt] + row_values)
+    parse_table.add_row([nt] + row_values)
 
+# طباعة النتائج
+print("Grammar Rules:")
+print(grammar_table)
+print("\nFirst Sets:")
+print(first_table)
+print("\nFollow Sets:")
+print(follow_table)
 print("\nParse Table:")
-print(table)
+print(parse_table)
