@@ -57,17 +57,19 @@ def follow(grammar, start_symbol, symbol):
     return follow_set
 
 
+# القواعد النحوية المعطاة
 grammar = [
-        ('E', 'TA'),
-        ('A', '+TA'),
-        ('A', 'epsilon'),
-        ('T', 'FB'),
-        ('B', '*FB'),
-        ('B', 'epsilon'),
-        ('F', '(E)'),
-        ('F', 'd'),
+    ('E', 'TA'),
+    ('A', '+TA'),
+    ('A', 'epsilon'),
+    ('T', 'FB'),
+    ('B', '*FB'),
+    ('B', 'epsilon'),
+    ('F', '(E)'),
+    ('F', 'd'),
 ]
 
+# تحديد مجموعة الرموز غير المحددة ومجموعة الرموز المحددة
 non_terminals_set = set(left_side for left_side, _ in grammar)
 terminals_set = set()
 for nt in non_terminals_set:
@@ -77,11 +79,23 @@ for nt in non_terminals_set:
 non_terminals = list(non_terminals_set)
 terminals = list(terminals_set)
 
+# إنشاء جدول جميل
 table = PrettyTable()
 table.field_names = ['NT / T'] + terminals
 
+# طباعة First set لكل رمز غير محدد
+print("First Sets:")
 for nt in non_terminals:
-    productions = [ prod[1] for prod in grammar if prod[0] == nt and prod[1] != 'epsilon']
+    print(f'First({nt}) = {first(grammar, nt)}')
+
+# طباعة Follow set لكل رمز غير محدد
+print("\nFollow Sets:")
+for nt in non_terminals:
+    print(f'Follow({nt}) = {follow(grammar, "E", nt)}')
+
+# إضافة البيانات إلى الجدول
+for nt in non_terminals:
+    productions = [prod[1] for prod in grammar if prod[0] == nt and prod[1] != 'epsilon']
     row_values = []
     first_nt = first(grammar, nt)
     follow_nt = follow(grammar, 'E', nt)
@@ -94,4 +108,6 @@ for nt in non_terminals:
             row_values.append('')
     table.add_row([nt] + row_values)
 
+# طباعة الجدول
+print("\nParse Table:")
 print(table)
