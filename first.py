@@ -13,9 +13,19 @@ def calculate_first_sets(grammar):
     while True:
         changes = False
         for non_terminal, production in grammar:
-            if production[0] in first_sets:
-                if add_first_set(first_sets[non_terminal], first_sets[production[0]]):
+            first_symbol = production[0]
+            if first_symbol in first_sets:
+                if add_first_set(first_sets[non_terminal], first_sets[first_symbol]):
                     changes = True
+                # If first symbol is a non-terminal, check if it derives epsilon
+                if 'epsilon' in first_sets[first_symbol]:
+                    index = 1
+                    # Continue adding next symbols until epsilon is not derived
+                    while index < len(production) and 'epsilon' in first_sets[first_symbol]:
+                        if production[index] in first_sets:
+                            if add_first_set(first_sets[non_terminal], first_sets[production[index]] - {'epsilon'}):
+                                changes = True
+                        index += 1
         if not changes:
             break
     
