@@ -74,12 +74,11 @@ terminals_set = set()
 for nt in non_terminals_set:
     terminals_set |= {c for c in nt if c.islower()}
     terminals_set |= {c for c in nt if c.isnumeric()}
-    terminals_set |= {'+', '*', '(', ')'}
+    terminals_set |= {'+', '*', '(', ')','$'}
 
 non_terminals = sorted(list(non_terminals_set))
 terminals = sorted(list(terminals_set))
 
-# تحديد القوائم First و Follow
 first_sets = {}
 follow_sets = {}
 
