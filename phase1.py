@@ -1,10 +1,9 @@
 import re
 
-# Read the contents of the text file
 with open('text.txt', 'r') as file:
     file_contents = file.read()
 
-# Split the text into words and operators using regular expressions
+
 split_text = re.findall(r'\b\w+\b|[^\w\s]', file_contents)
 
 def determine_token(lexeme):
@@ -31,7 +30,6 @@ print("LEXEME          TOKEN")
 for lexeme in split_text:
     token = determine_token(lexeme)
     token_lexeme_pairs.append((token, lexeme))  # Save token-lexeme pair
-    # Update token count
     token_counts[token] = token_counts.get(token, 0) + 1
     print(f"{lexeme:<15} {token}")
 
@@ -40,16 +38,16 @@ with open('tokens_and_lexemes.txt', 'w') as output_file:
     for token, lexeme in token_lexeme_pairs:
         output_file.write(f"{token:<23}\t{lexeme}\n")
 
-# Calculate and print total token count
+
 total_tokens = sum(token_counts.values())
 print(f"\nTotal number of Tokens: {total_tokens}")
 
-# Print token counts
+
 print("\nToken Counts:")
 for token, count in token_counts.items():
     print(f"{token}: {count}")
 
-# Define the grammar rules
+# grammar rules
 grammar_rules = {
     "S": ["Statement"],
     "Statement": ["Assignment", "Conditional", "PrintStatement"],
@@ -66,14 +64,13 @@ grammar_rules = {
     "PrintStatement": ["'print' '(' identifier ')' ';'"]
 
 }
-# Create the table headers
+
 print("\nGrammar Table:")
 print("\nRule\t\t\tComponents")
-# Create the table data
 for rule, components in grammar_rules.items():
     print(f"{rule:<23} {', '.join(components)}")
 
-# Define regular expressions
+# regular expressions
 regex_patterns = {
     "Assignment": r"(int|float)\s+[a-zA-Z_][a-zA-Z0-9_]*\s*=\s*(\d+|\d+\.\d+)\s*;",
     "Conditional": r"if\s*\(\s*[a-zA-Z_][a-zA-Z0-9_]*\s*>\s*\d+\s*\)\s*\{\s*Statement\s*\}",
