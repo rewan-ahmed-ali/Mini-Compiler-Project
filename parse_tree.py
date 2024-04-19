@@ -10,7 +10,7 @@ class TreeNode:
 
     def print_tree(self, level=0):
         if level == 0:
-            print(self.value)  # Print root node only once
+            print(self.value)  
         else:
             print("│    " * (level - 1) + "└───" + self.value)
         
@@ -18,35 +18,53 @@ class TreeNode:
             child.print_tree(level + 1)
 
 
-# Creating nodes
-program = TreeNode("Tree Structure:\n")
-read_file = TreeNode("Read text.txt")
-declaration_statements = TreeNode("Declaration Statements")
-conditional_statement = TreeNode("Conditional Statement (if)")
+# context-free grammar
+variable_declaration_cfg = nltk.CFG.fromstring("""
+    S -> Statement
+    Statement -> Assignment | Conditional | PrintStatement
+    Assignment -> 'int' identifier '=' NUMBER ';'
+    Assignment -> 'float' identifier '=' NUMBER ';'                                           
+    identifier -> 'a' | 'b' | 'c' | 'x' | 'y' | 'z' | 'r'
+    NUMBER ->  DIGIT | DIGIT DIGITS
+    DIGIT -> '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9'
+    DIGITS -> DIGIT | DIGIT DIGITS
+    Conditional -> 'if' '(' identifier '>' NUMBER ')' '{' Statement '}'
+    PrintStatement -> 'print' '(' Variable ')' ';'
+""")
 
-int_r = TreeNode("int r = 16;")
-int_a = TreeNode("int a = 1;")
-int_x = TreeNode("int x = 5;")
-condition = TreeNode("Condition: x > 0")
-code_block = TreeNode("Code Block")
-print_statement = TreeNode("Print Statement")
-expression_x = TreeNode("Expression: x")
+# Create a parser based on the grammar
+parser = nltk.ChartParser(variable_declaration_cfg)
 
-# Building the tree structure
-program.add_child(declaration_statements)
-program.add_child(conditional_statement)
+with open('text.txt', 'r') as file:
+    lines = file.readlines()
 
-declaration_statements.add_child(int_r)
-declaration_statements.add_child(int_a)
-declaration_statements.add_child(int_x)
 
-conditional_statement.add_child(condition)
-conditional_statement.add_child(code_block)
-code_block.add_child(print_statement)
-print_statement.add_child(expression_x)
+for line in lines:
+    if "float" not in line:  # Skip lines containing "float"
+        # Tokenize the statement properly
+        tokens = nltk.word_tokenize(line.strip())
+        
+        # Create a root node for the parse tree
+        program_tree = TreeNode("Parse Tree:")
+        
+        # Parse the statement using the provided parser
+        for tree in parser.parse(tokens):
+            # Convert the NLTK Tree to a tree structure using TreeNode class
+            def convert_nltk_tree_to_tree_node(nltk_tree, parent_node):
+                if isinstance(nltk_tree, nltk.Tree):
+                    node = TreeNode(nltk_tree.label())
+                    parent_node.add_child(node)
+                    for child in nltk_tree:
+                        convert_nltk_tree_to_tree_node(child, node)
+                else:
+                    parent_node.add_child(TreeNode(str(nltk_tree)))
+            
+            # Convert and add the parse tree to the program_tree
+            convert_nltk_tree_to_tree_node(tree, program_tree)
+            
+            # Print the program_tree
+            program_tree.print_tree()
 
-# Printing the tree structure
-program.print_tree()
 
 
 variable_declaration_cfg = nltk.CFG.fromstring("""
@@ -76,3 +94,4 @@ for line in lines:
         # Parse the statement using the provided parser
         for tree in parser.parse(tokens):
             print(tree)
+            tree.pretty_print()
