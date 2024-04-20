@@ -8,7 +8,7 @@ def calculate_hash(variable_name, hash_max):
 
 file_path = "text.txt"  
 symbol_table = {}  
-hash_max = 3  
+hash_max = 4  
 with open(file_path, 'r') as file:
     for line in file:
         # Remove whitespace
